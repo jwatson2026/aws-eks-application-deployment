@@ -1,0 +1,13 @@
+.aws/
+.kube/
+.env
+.env.*
+*.pem
+*.key
+*.tfstate
+*.tfstate.*
+.terraform/
+*.tfplan
+crash.log
+Thumbs.db
+.DS_Store

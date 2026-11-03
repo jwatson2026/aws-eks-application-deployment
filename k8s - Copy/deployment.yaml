@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: class
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: class
+  template:
+    metadata:
+      labels:
+        app: class
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
