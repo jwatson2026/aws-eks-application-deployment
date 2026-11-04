@@ -111,3 +111,55 @@ Verify the AWS load balancer is deleted before removing the worker group and EKS
 - kubectl node listing requires permissions beyond the application's edit policy.
 
 For production-style learning, restrict endpoint access, evaluate private workers and their egress, add resource requests/limits and health probes, pin images, and build/test Terraform as a separate improvement.
+
+## ConfigMap and Secret exercise — November 4, 2026
+
+Completed this exercise using Git Bash against the existing EKS cluster.
+
+### What I added
+
+- `k8s/configmap.yaml`: ordinary settings named `access_level` and `env`.
+- `k8s/secret.example.yaml`: fake practice credentials only.
+- `k8s/deployment.yaml`: references both objects through `envFrom`.
+
+The ConfigMap and Secret were applied first, followed by the Deployment.
+The Deployment successfully rolled out with three Nginx replicas.
+This supersedes the earlier statement that the Deployment YAML had not been applied.
+The Service YAML was not applied during this exercise.
+
+### What I verified
+
+- The container returned `access_level=2` and `env=stage`.
+- The container returned `username=lab-user` from the Secret.
+- After changing the ConfigMap to `env=dev` and restarting the Deployment,
+  the container returned `dev`.
+
+### What I learned
+
+ConfigMaps provide ordinary settings, while Secrets provide sensitive values.
+The Deployment references these objects so Kubernetes can pass their values
+into containers as environment variables.
+
+Existing containers do not automatically receive updated environment variables
+when a ConfigMap changes. Restarting the Deployment creates containers with
+the updated values.
+
+These variables demonstrate configuration delivery; they do not enable
+Nginx authentication. The Secret example contains fake values, and
+`stringData` does not encrypt the YAML file.
+
+### Repeat the configuration exercise
+
+These commands assume an existing cluster and the correct kubectl context.
+They do not create a public load balancer.
+
+```bash
+kubectl apply -f k8s/configmap.yaml
+kubectl apply -f k8s/secret.example.yaml
+kubectl apply -f k8s/deployment.yaml
+kubectl rollout status deployment/class -n default --timeout=180s
+kubectl exec -n default deployment/class -- printenv access_level env
+kubectl exec -n default deployment/class -- printenv username
+```
+
+AWS cleanup remains pending.

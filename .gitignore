@@ -11,3 +11,11 @@
 crash.log
 Thumbs.db
 .DS_Store
+
+# Temporary Terraform lock file
+.terraform.tfstate.lock.info
+
+# Local Secret files containing real credentials
+k8s/secret.yaml
+k8s/secrets.yaml
+k8s/secret.local.yaml

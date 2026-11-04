@@ -18,3 +18,8 @@ spec:
           image: nginx
           ports:
             - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: myconfigmap
+            - secretRef:
+                name: secret-basic-auth
