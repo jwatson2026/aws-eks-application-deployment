@@ -163,3 +163,17 @@ kubectl exec -n default deployment/class -- printenv username
 ```
 
 AWS cleanup remains pending.
+
+## Cleanup verified — November 4, 2026
+
+- Deleted the Nginx Deployment, ConfigMap, and practice Secret.
+- Confirmed the application Service was absent.
+- Deleted the managed node group and EKS cluster.
+- Confirmed the EKS worker instance was terminated.
+- Found no load balancers, NAT gateways, or Elastic IPs in us-east-1.
+- The volume inspected was attached to the separate Jenkins instance and was preserved.
+- Preserved existing shared networking and the separate Jenkins resources.
+
+This replaces the earlier "AWS cleanup remains pending" status.
+The Kubernetes manifests remain in GitHub for rebuilding the application
+on a future cluster.
