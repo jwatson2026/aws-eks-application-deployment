@@ -1,4 +1,4 @@
-# AWS EKS: Nginx Deployment, Scaling, and Pod Replacement
+# # # AWS EKS Application Deployment & Recovery
 
 Author: Joshua Watson
 
